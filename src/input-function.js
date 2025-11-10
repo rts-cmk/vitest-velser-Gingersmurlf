@@ -9,6 +9,11 @@ export function Input(value) {
     }
 
     if (typeof value === "number") {
-        return value;
+        if (!isFinite(value) && value >= 0)
+            return value + " is not a valid number";
     }
+}
+
+export async function Waiting() {
+    return "Done";
 }
