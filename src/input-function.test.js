@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
-import { Input, Waiting } from "./input-function";
+import { Input, Waiting, getLatest, messages } from "./input-function";
 
 describe("input", () => {
     it("should validate inputs", () => {
@@ -38,4 +38,33 @@ describe("waiting", () => {
     //     const result = Waiting()
     //     expect(result).toEqual("Done")
     // })
+})
+
+describe("get latest", () => {
+    it('should get the latest message with a spy', () => {
+        const spy = vi.spyOn(messages, 'getLatest')
+        expect(spy.getMockName()).toEqual('getLatest')
+
+        expect(messages.getLatest()).toEqual(
+            messages.items[messages.items.length - 1],
+        )
+
+        expect(spy).toHaveBeenCalledTimes(1)
+
+        spy.mockImplementationOnce(() => 'access-restricted')
+        expect(messages.getLatest()).toEqual('access-restricted')
+
+        expect(spy).toHaveBeenCalledTimes(2)
+    })
+
+    it('passing down the mock', () => {
+        const callback = vi.fn()
+        messages.onItem(callback)
+
+        messages.addItem({ message: 'Another test message', from: 'Testman' })
+        expect(callback).toHaveBeenCalledWith({
+            message: 'Another test message',
+            from: 'Testman',
+        })
+    })
 })
