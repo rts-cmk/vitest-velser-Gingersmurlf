@@ -22,9 +22,28 @@ describe("input", () => {
         expect(Input("hej med dig")).toEqual(true)
     })
 
+    it("should return a number", () => {
+        expect(Input(1001)).toEqual(1001)
+    })
+
     it("should return an expected error", () => {
         const value = Infinity
-        expect(Input(value)).toEqual(value + " is not a valid number")
+        expect(Input(value)).toEqual(value + " This is not a valid number")
+    })
+
+    it("should return an expected error", () => {
+        let hej = Object
+        expect(Input({ hej })).toEqual("This is not a number or a string")
+    })
+
+    it("should return an expected error", () => {
+        let hej
+        expect(Input(hej)).toEqual(false)
+    })
+
+    it("should return false", () => {
+        let hej = true
+        expect(Input(hej)).toEqual(false)
     })
 })
 

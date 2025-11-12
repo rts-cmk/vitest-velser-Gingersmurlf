@@ -1,26 +1,31 @@
 export function Input(value) {
 
-    if (value === null) {
-        return false;
-    }
+  if (!value) {
+    return false;
+  }
 
-    if (typeof value === "string") {
-        return value.trim().length > 0;
-    }
+  if (typeof value === "object") {
+    return "This is not a number or a string";
+  }
 
-    if (typeof value === "number") {
-    // Non-finite numbers (Infinity, -Infinity, NaN) should return an error
+  if (typeof value === "string") {
+    return value.trim().length > 0;
+  }
+
+  if (typeof value === "number") {
     if (!isFinite(value)) {
-      return value + " is not a valid number";
+      return value + " This is not a valid number";
     }
+    else {
+      return value;
+    }
+  }
 
-    // For valid numbers return the number itself (tests expect this)
-    return value;
-    }
+  return false;
 }
 
 export async function Waiting() {
-    return "Done";
+  return "Done";
 }
 
 export const messages = {
